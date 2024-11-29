@@ -2,7 +2,7 @@
 
 int main() {
     // Affiche le message à l'écran
-    printf("Hello, World!\n");
+    printf("Hello everyone, Welcome!\n");
 
     return 0;  // Indique que le programme s'est terminé avec succès
 }
