@@ -13,6 +13,8 @@ int main() {
     printf("f");
     printf("g");
     printf("H");
+    printf("\n Bonjour khawti \n  ");
+    printf("hello");
   
     return 0;
 }
