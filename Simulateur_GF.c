@@ -5,17 +5,17 @@
 #define NBR_BLOCS 100 // Nombre total de blocs dans la mémoire
 #define FB 10 // Taille d'un bloc
 
+typedef struct {
+  char nom [21];
+  int id ;
+  float prix ;
+ }Produit ;
+
  typedef struct {
   int Table_dallocation[NBR_BLOCS]; //libre 0 ou non 1
   Produit Produits[FB];
   struct BLOC* suivant; // Pointeur vers le bloc suivant
  }BLOC ;
-
- typedef struct {
-  char nom [21];
-  int id ;
-  float prix ;
- }Produit ;
 
  typedef struct {
  char nom [21];
