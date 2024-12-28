@@ -11,6 +11,7 @@
   int id ;
   float prix ;
   int is_deleted ;
+  struct Produit* suivant;
  }Produit ;
 
  typedef struct {
@@ -865,6 +866,38 @@ void defragmentationChaineeNonTrie(FILE* f, MS* ms) {
         printf("Defragmentation interne chainee terminee avec succes.\n");
     }
 }
+
+void supprimerEnregistrementChaineTrieePhysique(Produit** tete, int id_produit) {
+    Produit* courant = *tete;
+    Produit* precedent = NULL;
+
+    // Parcours de la liste pour trouver le produit à supprimer
+    while (courant != NULL) {
+        if (courant->id == id_produit) {
+            // Réajuster les pointeurs pour exclure l'élément
+            if (precedent == NULL) {
+                // Si c'est le premier élément
+                *tete = courant->suivant;
+            } else {
+                precedent->suivant = courant->suivant;
+            }
+            free(courant); // Libérer physiquement la mémoire
+            printf("Produit avec ID %d supprimé avec succès.\n", id_produit);
+            return;
+        } else if (courant->id > id_produit) {
+            // Arrêter la recherche si l'ID dépasse (liste triée)
+            printf("Produit avec ID %d non trouvé.\n", id_produit);
+            return;
+        }
+        precedent = courant;
+        courant = courant->suivant;
+    }
+
+    printf("Produit avec ID %d non trouvé.\n", id_produit);
+}
+
+
+
 void supprimerlogiquementEnregistrementChaineTriee(FILE* f, int id) {
     Meta meta;
 
