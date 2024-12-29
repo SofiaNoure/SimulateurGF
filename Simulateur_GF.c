@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <locale.h>
-#define NBR_BLOCS 100 // Nombre total de blocs dans la mÈmoire
+#define NBR_BLOCS 100 // Nombre total de blocs dans la m√©moire
 #define FB 10 // Taille d'un bloc
 
  typedef struct {
@@ -53,32 +53,32 @@ typedef struct {
 
  void AllouerBlocsContigus(Meta* fichier, MS* ms, int taille_fichier) {
 
-    fichier->premier_bloc_contigue = -1;  // Initialisation ‡ -1
-    int blocs_alloues = 0;                 // Compteur pour les blocs trouvÈs
+    fichier->premier_bloc_contigue = -1;  // Initialisation √† -1
+    int blocs_alloues = 0;                 // Compteur pour les blocs trouv√©s
     int i = 0;                              // Index pour parcourir les blocs
 
     while (blocs_alloues < taille_fichier) {
         // Chercher un bloc libre
         while (i < NBR_BLOCS && ms->Table_dallocation[i] == 1) {
-            i++; // Passer les blocs occupÈs
+            i++; // Passer les blocs occup√©s
         }
 
-        // Si on a trouvÈ un bloc libre
+        // Si on a trouv√© un bloc libre
         if (i < NBR_BLOCS) {
-            if (blocs_alloues == 0) { // DÈbut d'une nouvelle sÈquence
+            if (blocs_alloues == 0) { // D√©but d'une nouvelle s√©quence
                 fichier->premier_bloc_contigue = i;
             }
 
-            blocs_alloues++; // Augmenter le nombre de blocs allouÈs
-            ms->Table_dallocation[i] = 1; // Marquer le bloc comme occupÈ
+            blocs_alloues++; // Augmenter le nombre de blocs allou√©s
+            ms->Table_dallocation[i] = 1; // Marquer le bloc comme occup√©
 
             // Si on a atteint le nombre requis d'enregistrements
             if (blocs_alloues == taille_fichier) {
-                printf("Blocs allouÈs ‡ partir du bloc: %d\n", fichier->premier_bloc_contigue);
+                printf("Blocs allou√©s √† partir du bloc: %d\n", fichier->premier_bloc_contigue);
                 return;
             }
         } else {
-            // Si on sort de la boucle sans avoir allouÈ tous les blocs nÈcessaires
+            // Si on sort de la boucle sans avoir allou√© tous les blocs n√©cessaires
             printf("Echec de l'allocation en raison du manque de blocs libres contigus.\n");
             return;
         }
@@ -97,13 +97,13 @@ typedef struct {
             ms->Table_dallocation[i] = 1;   // On alloue le bloc
 
             BLOC* nouveau_bloc = (BLOC*)malloc(sizeof(BLOC));
-            if (nouveau_bloc == NULL) { // VÈrification de l'allocation mÈmoire
+            if (nouveau_bloc == NULL) { // V√©rification de l'allocation m√©moire
                 printf("Erreur : memoire insuffisante pour allouer un nouveau bloc.\n");
                 return;
             }
             nouveau_bloc->suivant = NULL;
 
-            if (dernier_bloc == NULL) { // Premier bloc ‡ allouer
+            if (dernier_bloc == NULL) { // Premier bloc √† allouer
                 fichier->premier_bloc = nouveau_bloc; // Affectation de l'adresse
             } else {
                 dernier_bloc->suivant = nouveau_bloc;
@@ -115,7 +115,7 @@ typedef struct {
     }
 
     if (blocs_alloues < taille_fichier) {
-        printf("…chec de l'allocation : pas assez de blocs libres disponibles.\n");
+        printf("√âchec de l'allocation : pas assez de blocs libres disponibles.\n");
     } else {
         printf("Blocs chaines alloues avec succes.\n");
     }
@@ -201,16 +201,16 @@ typedef struct {
         }
 
         if (produits_restants == 0) {
-            printf("Le fichier est bien chargÈ\n");
+            printf("Le fichier est bien charg√©\n");
         } else {
-            printf("Erreur : tous les produits n'ont pas pu Ítre chargÈs\n");
+            printf("Erreur : tous les produits n'ont pas pu √™tre charg√©s\n");
         }
     }
-     else { // Organisation chaÓnÈe
+     else { // Organisation cha√Æn√©e
         AllouerBlocsChaines(ms ,f, f->taille);
 
-        // Charger les mÈtadonnÈes dans les blocs chaÓnÈs
-        BLOC *current_bloc = f->premier_bloc; // Premier bloc allouÈ dans l'organisation chaÓnÈe
+        // Charger les m√©tadonn√©es dans les blocs cha√Æn√©s
+        BLOC *current_bloc = f->premier_bloc; // Premier bloc allou√© dans l'organisation cha√Æn√©e
         int produits_restants = f->nbr_produit;
 
         while (current_bloc != NULL && produits_restants > 0) {
@@ -279,7 +279,7 @@ typedef struct {
             current_bloc = current_bloc->suivant;
         }
     }
-    printf("Tous les blocs associÈs ont ÈtÈ physiquement libÈrÈs.\n");
+    printf("Tous les blocs associ√©s ont √©t√© physiquement lib√©r√©s.\n");
 }
 
 
@@ -292,7 +292,7 @@ typedef struct {
     }
     mettreajourMeta(f ,"",0,0,0,0,0,0); //supprimer le fichier logiquement
     libererblocs(f, ms); //supprimer le fichier physiquement
-     printf("Le fichier a ÈtÈ bien supprimÈ");
+     printf("Le fichier a √©t√© bien supprim√©");
 }
 
 void initializeMetadata(FILE* f, MS* ms) {
@@ -872,29 +872,29 @@ void supprimerEnregistrementChaineTrieePhysique(Produit** tete, int id_produit) 
     Produit* courant = *tete;
     Produit* precedent = NULL;
 
-    // Parcours de la liste pour trouver le produit ‡ supprimer
+    // Parcours de la liste pour trouver le produit √† supprimer
     while (courant != NULL) {
         if (courant->id == id_produit) {
-            // RÈajuster les pointeurs pour exclure l'ÈlÈment
+            // R√©ajuster les pointeurs pour exclure l'√©l√©ment
             if (precedent == NULL) {
-                // Si c'est le premier ÈlÈment
+                // Si c'est le premier √©l√©ment
                 *tete = courant->suivant;
             } else {
                 precedent->suivant = courant->suivant;
             }
-            free(courant); // LibÈrer physiquement la mÈmoire
-            printf("Produit avec ID %d supprimÈ avec succËs.\n", id_produit);
+            free(courant); // Lib√©rer physiquement la m√©moire
+            printf("Produit avec ID %d supprim√© avec succ√®s.\n", id_produit);
             return;
         } else if (courant->id > id_produit) {
-            // ArrÍter la recherche si l'ID dÈpasse (liste triÈe)
-            printf("Produit avec ID %d non trouvÈ.\n", id_produit);
+            // Arr√™ter la recherche si l'ID d√©passe (liste tri√©e)
+            printf("Produit avec ID %d non trouv√©.\n", id_produit);
             return;
         }
         precedent = courant;
         courant = courant->suivant;
     }
 
-    printf("Produit avec ID %d non trouvÈ.\n", id_produit);
+    printf("Produit avec ID %d non trouv√©.\n", id_produit);
 }
 
 
@@ -905,7 +905,7 @@ void supprimerlogiquementEnregistrementChaineTriee(FILE* f, int id) {
     // Valider la lecture du fichier
     fseek(f, 0, SEEK_SET);
     if (fread(&meta, sizeof(Meta), 1, f) != 1) {
-        printf("Erreur : Impossible de lire les mÈtadonnÈes.\n");
+        printf("Erreur : Impossible de lire les m√©tadonn√©es.\n");
         return;
     }
 
@@ -919,7 +919,7 @@ void supprimerlogiquementEnregistrementChaineTriee(FILE* f, int id) {
             if (current->Produits[i].id == id) {
 
                 current->Produits[i].is_deleted = 1;
-                printf("Enregistrement avec l'ID %d supprimÈ logiquement.\n", id);
+                printf("Enregistrement avec l'ID %d supprim√© logiquement.\n", id);
 
 
                 fseek(f, sizeof(Meta) + blocIndex * sizeof(BLOC), SEEK_SET);
@@ -931,7 +931,7 @@ void supprimerlogiquementEnregistrementChaineTriee(FILE* f, int id) {
         blocIndex++;
     }
 
-    printf("Enregistrement avec l'ID %d non trouvÈ.\n", id);
+    printf("Enregistrement avec l'ID %d non trouv√©.\n", id);
 }
 
 
@@ -941,39 +941,39 @@ void supprimerEnregistrementContigueTrieePhysique(FILE* f, MS* ms, int id) {
     // Valider la lecture du fichier
     fseek(f, 0, SEEK_SET);
     if (fread(&meta, sizeof(Meta), 1, f) != 1) {
-        printf("Erreur : Impossible de lire les mÈtadonnÈes.\n");
+        printf("Erreur : Impossible de lire les m√©tadonn√©es.\n");
         return;
     }
 
-    // VÈrifier si le fichier est en mode contigu et triÈ
+    // V√©rifier si le fichier est en mode contigu et tri√©
     if (meta.organisation_globale != 1 || meta.organisation_interne != 1) {
-        printf("Erreur : Le fichier n'est pas en mode contigu et triÈ.\n");
+        printf("Erreur : Le fichier n'est pas en mode contigu et tri√©.\n");
         return;
     }
 
     // Parcourir les blocs contigus
     int blocIndex = meta.premier_bloc_contigue;
     while (blocIndex < meta.premier_bloc_contigue + meta.taille) {
-        BLOC* bloc = &ms->blocs[blocIndex]; // AccÈder au bloc correspondant
+        BLOC* bloc = &ms->blocs[blocIndex]; // Acc√©der au bloc correspondant
         for (int i = 0; i < bloc->nbr_produit; i++) {
-            // VÈrifier si l'ID correspond
+            // V√©rifier si l'ID correspond
             if (bloc->Produits[i].id == id) {
-                // DÈplacer les enregistrements pour supprimer l'ÈlÈment
+                // D√©placer les enregistrements pour supprimer l'√©l√©ment
                 for (int j = i; j < bloc->nbr_produit - 1; j++) {
                     bloc->Produits[j] = bloc->Produits[j + 1];
                 }
 
-                // Remettre ‡ zÈro le dernier enregistrement
+                // Remettre √† z√©ro le dernier enregistrement
                 bloc->Produits[bloc->nbr_produit - 1].id = 0;
                 strcpy(bloc->Produits[bloc->nbr_produit - 1].nom, "");
                 bloc->Produits[bloc->nbr_produit - 1].prix = 0.0;
                 bloc->Produits[bloc->nbr_produit - 1].is_deleted = 0;
 
-                // RÈduire le nombre de produits dans le bloc
+                // R√©duire le nombre de produits dans le bloc
                 bloc->nbr_produit--;
-                printf("Enregistrement avec l'ID %d supprimÈ physiquement.\n", id);
+                printf("Enregistrement avec l'ID %d supprim√© physiquement.\n", id);
 
-                // …crire les donnÈes mises ‡ jour dans le fichier
+                // √âcrire les donn√©es mises √† jour dans le fichier
                 fseek(f, sizeof(Meta) + blocIndex * sizeof(BLOC), SEEK_SET);
                 fwrite(bloc, sizeof(BLOC), 1, f);
                 return;
@@ -982,8 +982,8 @@ void supprimerEnregistrementContigueTrieePhysique(FILE* f, MS* ms, int id) {
         blocIndex++;
     }
 
-    // Si l'enregistrement n'est pas trouvÈ
-    printf("Enregistrement avec l'ID %d non trouvÈ.\n", id);
+    // Si l'enregistrement n'est pas trouv√©
+    printf("Enregistrement avec l'ID %d non trouv√©.\n", id);
 }
 
 void compactageMemoireContigus(MS* ms, Meta* fichier){
@@ -1119,50 +1119,50 @@ void insererEnregistrementNonTrieContigu(FILE* f, MS* ms, Produit* nouveau_produ
     fseek(f, 0, SEEK_SET);
     fread(&meta, sizeof(Meta), 1, f);
 
-    // Chercher un bloc allouÈ avec de l'espace disponible
+    // Chercher un bloc allou√© avec de l'espace disponible
     for (int i = 0; i < NBR_BLOCS; i++) {
-        if (ms->Table_dallocation[i] == 1) { // VÈrifier si le bloc est allouÈ
+        if (ms->Table_dallocation[i] == 1) { // V√©rifier si le bloc est allou√©
             BLOC* bloc = &ms->blocs[i];
-            if (bloc->nbr_produit < FB) { // VÈrifier si le bloc a de l'espace
-                bloc->Produits[bloc->nbr_produit] = *nouveau_produit; // InsÈrer le produit
+            if (bloc->nbr_produit < FB) { // V√©rifier si le bloc a de l'espace
+                bloc->Produits[bloc->nbr_produit] = *nouveau_produit; // Ins√©rer le produit
                 bloc->nbr_produit++;
                 meta.nbr_produit++;
 
-                // Mise ‡ jour dans le fichier
+                // Mise √† jour dans le fichier
                 fseek(f, sizeof(Meta) + i * sizeof(BLOC), SEEK_SET);
                 fwrite(bloc, sizeof(BLOC), 1, f);
                 fseek(f, 0, SEEK_SET);
                 fwrite(&meta, sizeof(Meta), 1, f);
 
-                printf("Produit insÈrÈ avec succËs dans le bloc %d.\n", i);
+                printf("Produit ins√©r√© avec succ√®s dans le bloc %d.\n", i);
                 return;
             }
         }
     }
 
-    // Si aucun bloc allouÈ n'a d'espace, chercher un bloc libre et l'allouer
+    // Si aucun bloc allou√© n'a d'espace, chercher un bloc libre et l'allouer
     for (int i = 0; i < NBR_BLOCS; i++) {
         if (ms->Table_dallocation[i] == 0) { // Si le bloc est libre
             ms->Table_dallocation[i] = 1; // Allouer le bloc
             BLOC* nouveau_bloc = &ms->blocs[i];
             nouveau_bloc->nbr_produit = 1;
-            nouveau_bloc->Produits[0] = *nouveau_produit; // InsÈrer le produit
+            nouveau_bloc->Produits[0] = *nouveau_produit; // Ins√©rer le produit
             nouveau_bloc->suivant = NULL;
 
             meta.nbr_produit++;
 
-            // Mise ‡ jour dans le fichier
+            // Mise √† jour dans le fichier
             fseek(f, sizeof(Meta) + i * sizeof(BLOC), SEEK_SET);
             fwrite(nouveau_bloc, sizeof(BLOC), 1, f);
             fseek(f, 0, SEEK_SET);
             fwrite(&meta, sizeof(Meta), 1, f);
 
-            printf("Produit insÈrÈ avec succËs dans un nouveau bloc %d.\n", i);
+            printf("Produit ins√©r√© avec succ√®s dans un nouveau bloc %d.\n", i);
             return;
         }
     }
 
-    printf("Erreur : Pas assez d'espace disponible pour insÈrer le produit.\n");
+    printf("Erreur : Pas assez d'espace disponible pour ins√©rer le produit.\n");
 }
 
 
@@ -1171,16 +1171,16 @@ void insererEnregistrementTrieContigu(FILE* f, MS* ms, Produit* nouveau_produit)
     fseek(f, 0, SEEK_SET);
     fread(&meta, sizeof(Meta), 1, f);
 
-    // Chercher un bloc allouÈ avec de l'espace disponible
+    // Chercher un bloc allou√© avec de l'espace disponible
     for (int i = 0; i < NBR_BLOCS; i++) {
-        if (ms->Table_dallocation[i] == 1) { // VÈrifier si le bloc est allouÈ
+        if (ms->Table_dallocation[i] == 1) { // V√©rifier si le bloc est allou√©
             BLOC* bloc = &ms->blocs[i];
-            if (bloc->nbr_produit < FB) { // VÈrifier si le bloc a de l'espace
-                // Trouver l'endroit o˘ insÈrer le produit de maniËre triÈe
+            if (bloc->nbr_produit < FB) { // V√©rifier si le bloc a de l'espace
+                // Trouver l'endroit o√π ins√©rer le produit de mani√®re tri√©e
                 int j;
                 for (j = bloc->nbr_produit - 1; j >= 0; j--) {
                     if (strcmp(bloc->Produits[j].nom, nouveau_produit->nom) > 0) {
-                        bloc->Produits[j + 1] = bloc->Produits[j]; // DÈcalage
+                        bloc->Produits[j + 1] = bloc->Produits[j]; // D√©calage
                     } else {
                         break;
                     }
@@ -1189,41 +1189,41 @@ void insererEnregistrementTrieContigu(FILE* f, MS* ms, Produit* nouveau_produit)
                 bloc->nbr_produit++;
                 meta.nbr_produit++;
 
-                // Mise ‡ jour dans le fichier
+                // Mise √† jour dans le fichier
                 fseek(f, sizeof(Meta) + i * sizeof(BLOC), SEEK_SET);
                 fwrite(bloc, sizeof(BLOC), 1, f);
                 fseek(f, 0, SEEK_SET);
                 fwrite(&meta, sizeof(Meta), 1, f);
 
-                printf("Produit insÈrÈ dans le bloc %d de maniËre triÈe.\n", i);
+                printf("Produit ins√©r√© dans le bloc %d de mani√®re tri√©e.\n", i);
                 return;
             }
         }
     }
 
-    // Si aucun bloc allouÈ n'a d'espace, chercher un bloc libre et l'allouer
+    // Si aucun bloc allou√© n'a d'espace, chercher un bloc libre et l'allouer
     for (int i = 0; i < NBR_BLOCS; i++) {
         if (ms->Table_dallocation[i] == 0) { // Si le bloc est libre
             ms->Table_dallocation[i] = 1; // Allouer le bloc
             BLOC* nouveau_bloc = &ms->blocs[i];
             nouveau_bloc->nbr_produit = 1;
-            nouveau_bloc->Produits[0] = *nouveau_produit; // InsÈrer le produit triÈ
+            nouveau_bloc->Produits[0] = *nouveau_produit; // Ins√©rer le produit tri√©
             nouveau_bloc->suivant = NULL;
 
             meta.nbr_produit++;
 
-            // Mise ‡ jour dans le fichier
+            // Mise √† jour dans le fichier
             fseek(f, sizeof(Meta) + i * sizeof(BLOC), SEEK_SET);
             fwrite(nouveau_bloc, sizeof(BLOC), 1, f);
             fseek(f, 0, SEEK_SET);
             fwrite(&meta, sizeof(Meta), 1, f);
 
-            printf("Produit insÈrÈ dans un nouveau bloc %d de maniËre triÈe.\n", i);
+            printf("Produit ins√©r√© dans un nouveau bloc %d de mani√®re tri√©e.\n", i);
             return;
         }
     }
 
-    printf("Erreur : Pas assez d'espace disponible pour insÈrer le produit.\n");
+    printf("Erreur : Pas assez d'espace disponible pour ins√©rer le produit.\n");
 }
 
 
@@ -1233,19 +1233,19 @@ Position rechercherEnregistrementNonTrieContigu(FILE* f, MS* ms, int id_produit)
     fread(&meta, sizeof(Meta), 1, f);
 
     for (int i = 0; i < NBR_BLOCS; i++) {
-        if (ms->Table_dallocation[i] == 1) { // VÈrifier si le bloc est allouÈ
+        if (ms->Table_dallocation[i] == 1) { // V√©rifier si le bloc est allou√©
             BLOC* bloc = &ms->blocs[i];
             for (int j = 0; j < bloc->nbr_produit; j++) {
                 if (bloc->Produits[j].id == id_produit) { // Recherche par ID
-                    Position pos = {i, j}; // NumÈro de bloc et position
+                    Position pos = {i, j}; // Num√©ro de bloc et position
                     return pos; // Retourner la position
                 }
             }
         }
     }
 
-    printf("Produit avec ID %d non trouvÈ.\n", id_produit);
-    return (Position){-1, -1}; // Retourner une position invalide si non trouvÈ
+    printf("Produit avec ID %d non trouv√©.\n", id_produit);
+    return (Position){-1, -1}; // Retourner une position invalide si non trouv√©
 }
 
 
@@ -1262,7 +1262,7 @@ Position rechercherEnregistrementTrieContigu(FILE* f, MS* ms, int id_produit) {
             while (gauche <= droite) {
                 int milieu = (gauche + droite) / 2;
                 if (bloc->Produits[milieu].id == id_produit) { // Recherche par ID
-                    Position pos = {i, milieu}; // NumÈro de bloc et position
+                    Position pos = {i, milieu}; // Num√©ro de bloc et position
                     return pos; // Retourner la position
                 } else if (bloc->Produits[milieu].id < id_produit) {
                     gauche = milieu + 1;
@@ -1273,8 +1273,8 @@ Position rechercherEnregistrementTrieContigu(FILE* f, MS* ms, int id_produit) {
         }
     }
 
-    printf("Produit avec ID %d non trouvÈ.\n", id_produit);
-    return (Position){-1, -1}; // Retourner une position invalide si non trouvÈ
+    printf("Produit avec ID %d non trouv√©.\n", id_produit);
+    return (Position){-1, -1}; // Retourner une position invalide si non trouv√©
 }
 
 void supprimerEnregistrementNonTrieContigu(FILE* f, MS* ms, int id_produit) {
@@ -1283,31 +1283,31 @@ void supprimerEnregistrementNonTrieContigu(FILE* f, MS* ms, int id_produit) {
     fread(&meta, sizeof(Meta), 1, f);
 
     for (int i = 0; i < NBR_BLOCS; i++) {
-        if (ms->Table_dallocation[i] == 1) { // VÈrifier si le bloc est allouÈ
+        if (ms->Table_dallocation[i] == 1) { // V√©rifier si le bloc est allou√©
             BLOC* bloc = &ms->blocs[i];
             for (int j = 0; j < bloc->nbr_produit; j++) {
                 if (bloc->Produits[j].id == id_produit) { // Recherche par ID
-                    // DÈplacer les produits pour combler l'espace laissÈ par la suppression
+                    // D√©placer les produits pour combler l'espace laiss√© par la suppression
                     for (int k = j; k < bloc->nbr_produit - 1; k++) {
                         bloc->Produits[k] = bloc->Produits[k + 1];
                     }
                     bloc->nbr_produit--; // Diminuer le nombre de produits dans le bloc
-                    meta.nbr_produit--; // Mettre ‡ jour le total des produits
+                    meta.nbr_produit--; // Mettre √† jour le total des produits
 
-                    // …crire les modifications dans le fichier
+                    // √âcrire les modifications dans le fichier
                     fseek(f, sizeof(Meta) + i * sizeof(BLOC), SEEK_SET);
                     fwrite(bloc, sizeof(BLOC), 1, f);
                     fseek(f, 0, SEEK_SET);
                     fwrite(&meta, sizeof(Meta), 1, f);
 
-                    printf("Produit avec ID %d supprimÈ avec succËs.\n", id_produit);
+                    printf("Produit avec ID %d supprim√© avec succ√®s.\n", id_produit);
                     return;
                 }
             }
         }
     }
 
-    printf("Produit avec ID %d non trouvÈ.\n", id_produit);
+    printf("Produit avec ID %d non trouv√©.\n", id_produit);
 }
 
 
