@@ -1,4 +1,5 @@
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -863,7 +864,7 @@ void defragmentationChaineeNonTrie(FILE* f, MS* ms) {
     if (fwrite(&meta, sizeof(Meta), 1, f) != 1) {
         printf("Erreur : Echec de l'ecriture des metadonnees apres defragmentation.\n");
     } else {
-        printf("Defragmentation interne chainee terminee avec succes.\n");
+        printf("Defragmentation chainee terminee avec succes.\n");
     }
 }
 
@@ -1044,6 +1045,74 @@ void CompactageMemoireChaine(MS* ms, Meta* fichier){
 
 void initializeMetadata(FILE* f, MS* ms);
 void initializeBloc(BLOC* bloc); // Declare the function prototype
+
+//Suppression logique (mode contigu trie)
+void SuppressionLogiqueContiguTrie(FILE* f, MS* ms, int id_produit) {
+ BLOC *bloc ;
+ int gauche = 0;
+ int droite = bloc->nbr_produit - 1 ;
+    Meta meta;
+    fseek(f, 0, SEEK_SET);
+    fread(&meta, sizeof(Meta), 1, f);;
+
+        for (int i = 0; i < NBR_BLOCS; i++) {
+  if (ms->Table_dallocation[i] == 1){ //On verifie si le bloc est libre ou alloue
+    BLOC* bloc = &ms->blocs[i];
+    while(gauche <= droite){
+     int milieu = (gauche + droite) / 2;
+     if(bloc->Produits[milieu].id == id_produit){ //Si c'est le produit qu'on cherche
+       bloc->Produits[milieu].is_deleted = 1; //On le marque supprime
+       meta.nbr_produit--; //On decremente le nombre de produits -1
+
+       //Mettre le fichier a jour
+       fseek(f, sizeof(Meta) + i * sizeof(BLOC), SEEK_SET);
+       fwrite(bloc, sizeof(BLOC), 1, f);
+       fseek(f, 0, SEEK_SET);
+       fwrite(&meta, sizeof(Meta), 1, f);
+
+       printf("Produit supprime logiquement dans un bloc trie \n", id_produit);
+       return;
+     }else if (bloc->Produits[milieu].id < id_produit){
+      gauche = milieu + 1;
+     }else{
+      droite = milieu - 1;
+     }
+    }
+        }
+    }
+    printf("Produit avec ID %d non trouve \n", id_produit);
+}
+
+//Suppression logique (mode contigu non trie)
+void SuppressionLogiqueContiguNonTrie(FILE* f, MS* ms, int id_produit){
+ Meta meta;
+ fseek(f, 0, SEEK_SET);
+ fread(&meta, sizeof(Meta), 1, f);
+
+ for(int i = 0; i < NBR_BLOCS; i++){
+  if(ms->Table_dallocation[i] == 1){ // On verifie si le bloc est libre ou alloue
+   BLOC* bloc = &ms->blocs[i];
+
+   for(int j = 0; j < bloc->nbr_produit ; j++){
+    if(bloc->Produits[j].id == id_produit){
+     bloc->Produits[j].is_deleted = 1; //On marque le produit comme supprime
+     meta.nbr_produit--; //On decremente le nombre de produits
+    //On met a jour le fichier
+    fseek(f, sizeof(Meta) + i * sizeof(BLOC), SEEK_SET);
+    fwrite(bloc, sizeof(BLOC), 1, f);
+    fseek(f, 0, SEEK_SET);
+    fwrite(&meta, sizeof(Meta), 1, f);
+
+    printf("produit avec ID %d supprime logiquement \n", id_produit);
+    return;
+    }
+   }
+  }
+ }
+ printf("produit non trouve \n", id_produit);
+}
+
+
 
 void insererEnregistrementNonTrieContigu(FILE* f, MS* ms, Produit* nouveau_produit) {
     Meta meta;
@@ -1240,8 +1309,6 @@ void supprimerEnregistrementNonTrieContigu(FILE* f, MS* ms, int id_produit) {
 
     printf("Produit avec ID %d non trouvé.\n", id_produit);
 }
-
-
 
 
 
