@@ -1,11 +1,10 @@
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <locale.h>
 #define NBR_BLOCS 100 // Nombre total de blocs dans la mémoire
-#define FB 10 // Taille d'un bloc
+#define FB 10 // Taille d un bloc
 
  typedef struct {
   char nom [21];
