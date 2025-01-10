@@ -1,10 +1,10 @@
-##**Simulateur Simplifié d’un Système de Gestion de Fichiers (SGF) :**
-###**titre du projet:**##
+**Simulateur Simplifié d’un Système de Gestion de Fichiers (SGF) :**
+**titre du projet:**
 Simulateur Simplifié d’un Système de Gestion de Fichiers (SGF) 
-###**Description du Projet:**###
+**Description du Projet:**
 Ce projet vise à développer un simulateur simplifié de Système de Gestion de Fichiers (SGF) Il modélise les principes fondamentaux de la gestion des fichiers, y compris l'organisation de la
 mémoire secondaire, l'allocation de l'espace pour les fichiers, et la gestion des métadonnées, tout en permettant de réaliser des opérations sur les fichiers telles que la création, l'insertion, la recherche et la suppression
-###**Objectifs du projet:**##
+**Objectifs du projet:**
 Ce projet a pour objectif de développer un simulateur simplifié de Système de Gestion de Fichiers (SGF) afin de modéliser les principes fondamentaux de la gestion des fichiers.
 Il permet de reproduire les mécanismes de base d’un SGF réel, tels que :
 - L’organisation de la mémoire secondaire en blocs,
@@ -12,7 +12,7 @@ Il permet de reproduire les mécanismes de base d’un SGF réel, tels que :
 - La gestion des métadonnées,
 - Et les opérations courantes sur les fichiers (création, insertion, recherche, suppression).
 
-  ##**Prérequis**##
+  **Prérequis**
  - Compilateur C : Un compilateur compatible avec le langage C (par exemple, GCC).
  - Environnement de développement : Il est recommandé d'utiliser un IDE comme Code::Blocks ou un éditeur de texte avec des outils de compilation pour développer et tester le projet
  - Bibliothèques utilisées :
@@ -77,7 +77,7 @@ Compilez le programme avec GCC :
 Exécutez le programme :
  ./simulateur_GF
 
-**##Structure du code##**
+**##Structure du code**
 Le code source est structuré de la manière suivante :
 
 simulateur_GF.c : Le fichier principal qui contient toute la logique du simulateur, y compris la gestion de la mémoire secondaire, des fichiers et des enregistrements.
