@@ -115,7 +115,7 @@ Le code source est structuré de la manière suivante :
 Ce projet a été développé par un groupe de 5 personnes :
 - Delhoum Lina
 - Akkouchi Nesrine
-- Sofia Noureddine
+- Noureddine Sofia
 - Ouari Yasmine
-- Isra Foudili
+- Foudili Israa
 
